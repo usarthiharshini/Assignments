@@ -1,0 +1,58 @@
+.navbar{
+    display: flex;
+    justify-content: space-evenly;
+    background-color:brown;
+}
+.navbar a{
+    text-decoration: none;
+    color: black;
+}
+#form{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    border: 1px solid grey;
+    padding: 15px;
+    border-radius: 5px;
+    gap: 15px;
+    margin: auto;
+    background-color: blanchedalmond;
+}
+
+#form input,select{
+    padding: 20px;
+    
+}
+h1{
+    text-align: center;
+}
+#btn{
+    background-color: brown;
+    border: none;
+    border-radius: 5px;
+}
+
+/* zebra striping */
+
+thead{
+    background-color:brown;
+  }
+  
+  tbody  {
+    background-color:blanchedalmond;
+  }
+  
+
+  
+  table {
+    background-color: #ff33cc;
+    width: 80%;
+    margin: 20px auto;
+
+  }
+  tbody td , thead th {
+    text-align: center;
+    padding: 10px;
+    font-size: larger;
+  }
+  
