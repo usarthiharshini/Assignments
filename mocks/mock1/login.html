@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    
+
+<!-- Paste the below code for amazing navbar -->
+
+<div class="container">
+<div id="navcontainer">
+	
+
+    <ul>
+      
+      
+        <li><a href="" id="rest">Restaurants</a></li>
+        <li><a href="./login.html">Login</a></li>
+      
+    </ul>
+</div>
+
+		<form class="login-form" id="form">
+			<p >Login</p>
+			<label for="email">Email</label>
+			<input type="email" id="email" name="email">
+			<label for="password">Password</label>
+			<input type="text" id="password">
+			<button id="button" type="submit">Submit</button>
+		
+	
+</form>
+
+
+</div>
+
+
+
+
+
+</body>
+<script>
+
+var rest=document.getElementById("rest");
+rest.addEventListener("click",()=>{
+
+    var tok = localStorage.getItem("token");
+console.log(tok+"token");
+ if(tok=='QpwL5tke4Pnpja7X4'){
+    rest.href="./restaurant.html"
+}
+else 
+{
+    
+    rest.href='./login.html' 
+    alert("Login first!");
+}
+})
+
+
+
+  
+
+    
+var form =document.getElementById("form")
+    form.addEventListener("submit", async(e)=>{
+
+     e.preventDefault();
+        var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+
+    var data = {
+        email:email,
+        password:password
+    }
+
+    console.log(JSON.stringify(data)+"data");
+    var url = `https://reqres.in/api/login`;
+    
+try {
+    const res = await fetch(url, {
+  method: 'POST',
+  body: JSON.stringify(data),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+  
+})
+    
+let user = await res.json();
+localStorage.setItem("token",user.token);
+ if(user.token=='QpwL5tke4Pnpja7X4'){
+ alert("login successful")
+    
+   
+}
+   else {
+    alert("wrong credentials")
+    
+   } 
+ 
+console.log(token+"user");
+
+} catch (error) {
+    console.log(error);
+   
+}
+
+form.reset();
+    })
+
+</script>
+</html>

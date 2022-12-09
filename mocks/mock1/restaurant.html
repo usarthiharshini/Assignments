@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body style="background-image:none ">
+    <div id="navcontainer">
+	
+
+        <ul>
+          
+            <li id="token"></li>
+            <li><a href="" id="rest">Restaurants</a></li>
+            <li><a href="./login.html">Login</a></li>
+          
+        </ul>
+    </div>
+    <div id="sort-filter">
+    <div id="sort-section">
+        <select name="" id="sort" onchange="changeSort()">
+            <option value="price_starts_from">Price</option>
+            <option value="rating">Rating</option>
+        </select>
+    </div>
+    <div id="filter-section">
+        <select  id="filter" name="filter" onchange="changeType()">
+            <option value="cafe">Cafe</option>
+            <option value="ethnic">Ethnic</option>
+            <option value="fine_dining">fine_dining</option>
+            <option value="fast_food">fast_food</option>
+            <option value="casual_dining">casual_dining</option>
+        </select>
+    </div></div>
+
+    <div id="grid-container">
+
+    </div>
+    <div id="btn-grp">
+        <button id="dec"onclick="prevPage()" >-</button>
+        <span id="pagenum"></span>
+        <button id="inc" onclick="nextPage()">+</button>
+    </div>
+</body>
+<script>
+    var rest=document.getElementById("rest");
+rest.addEventListener("click",()=>{
+
+    var tok = localStorage.getItem("token");
+
+ if(tok=='QpwL5tke4Pnpja7X4'){
+    rest.href="./restaurant.html"
+}
+else 
+{
+    
+    rest.href='./login.html' 
+    alert("Login first!");
+}
+})
+var token = document.getElementById("token");
+var tok = localStorage.getItem("token");
+console.log(tok+"token");
+token.innerText="Token:"+tok;
+
+
+var filter="";
+var sort="";
+function changeType(){
+  var filterv  = document.getElementById("filter").value;
+   filter=`&filter=${filterv}`;
+   getData();
+}
+function changeSort(){
+  var sortv  = document.getElementById("sort").value;
+   sort=`&order=asc&sort=${sortv}`;
+   getData();
+}
+
+
+var page=1;
+var pagenum = document.getElementById("pagenum");
+
+pagenum.innerText=page;
+if(page==1){
+    var decbut = document.getElementById("dec");
+    decbut.disabled=true;
+}
+
+function nextPage(){
+    page++;
+    pagenum.innerText=page;
+    getData();
+    if(page>1){
+        var decbut = document.getElementById("dec");
+    decbut.disabled=false;
+      
+    }
+    else {
+        var decbut = document.getElementById("dec");
+    decbut.disabled=true;
+    } 
+}
+function prevPage(){
+  
+    page--;
+    pagenum.innerText=page;
+    getData();
+
+     if(page==1){
+        var decbut = document.getElementById("dec");
+    decbut.disabled=true;
+    }
+    else {
+        var decbut = document.getElementById("dec");
+    decbut.disabled=false;
+    } 
+   /*  if(page==2){
+
+   
+}
+else {
+   
+    
+} */
+
+   
+}
+
+
+const getData = async()=>{
+    try {
+      var  url =`https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/getrestaurants?page=${page}&limit=20${sort}${filter}`
+    let res = await fetch(url);
+    let data = await res.json();
+    let rests = JSON.stringify(data.data)
+
+  if(data.data.length<20){
+    var incbut = document.getElementById("inc");
+    incbut.disabled=true;
+  }
+  else{
+    var incbut = document.getElementById("inc");
+    incbut.disabled=false;
+  }
+   console.log(data.data.length);
+    displayData(data.data)
+
+    console.log(rests+" data");
+    } catch (error) {
+        console.log(error); 
+    }
+    
+}
+
+const displayData = (data)=>{
+    const grid = document.getElementById("grid-container");
+      grid.innerHTML="";
+    data.map((rest)=>{
+      const div=  document.createElement("div");
+      div.style.display="flex";
+      div.style.flexDirection="column";
+      div.style.boxShadow="0 15px 25px 0 rgba(153, 153, 153, .25)";
+      div.style.padding="10px";
+      div.style.borderRadius="10px";
+      div.style.backgroundColor="#ffffffba"
+      const name = document.createElement("h3");
+      name.innerText = rest.name;
+      const image = document.createElement("img");
+      image.src=rest.image;
+      const type = document.createElement("p");
+      type.innerText = rest.type;
+      const rating = document.createElement("p");
+      rating.innerText = rest.rating;
+      const price_starts_from = document.createElement("p");
+      price_starts_from.innerText = "₹"+rest.price_starts_from;
+      div.append(image,name,type,price_starts_from,rating);
+      
+      grid.append(div);
+    })
+
+   
+
+}
+
+getData();
+</script>
+</html>
