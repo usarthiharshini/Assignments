@@ -30,7 +30,7 @@ export default function MenuAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <FormGroup>
+    {/*   <FormGroup>
         <FormControlLabel
           control={
             <Switch
@@ -41,7 +41,7 @@ export default function MenuAppBar() {
           }
           label={auth ? 'Logout' : 'Login'}
         />
-      </FormGroup>
+      </FormGroup> */}
       <AppBar position="static">
         <Toolbar>
           <IconButton
